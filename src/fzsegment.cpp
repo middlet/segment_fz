@@ -17,7 +17,11 @@
 //#include "pnmfile.h" // not needed as using opencv
 #include "segment-image.h"
 
-image<rgb> *opencv_to_imagefz(cv::Mat &im) {
+image<rgb> *opencv_to_imagefz(const cv::Mat &im) {
+    image<rgb> *input = new image<rgb>(im.size().width, im.size().height);
+    std::cout << im.cols << " " << im.rows << std::endl;
+    std::cout << input->width() << " " << input->height() << std::endl;
+    //std::cout << im.rows << std::endl;
     
     
 }
@@ -33,7 +37,14 @@ int main(int argc, char **argv) {
   int min_size = atoi(argv[3]);
 	
   std::cout << "loading input image.\n";
-  cv::Mat im = cv::imread(argv[4], CV_LOAD_IMAGE_COLOR);
+  cv::Mat im = cv::imread(argv[4]);
+  if (!im.data)
+  {
+      std::cout << "failed to load : " << argv[4] << std::endl;
+      return -1;
+  }
+  //std::cout << im.data << std::endl;
+  std::cout << im.rows << std::endl;
   image<rgb> *input = opencv_to_imagefz(im);
   /*image<rgb> *input = loadPPM(argv[4]);
 	
