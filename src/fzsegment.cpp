@@ -22,8 +22,21 @@ image<rgb> *opencv_to_imagefz(const cv::Mat &im) {
     std::cout << im.cols << " " << im.rows << std::endl;
     std::cout << input->width() << " " << input->height() << std::endl;
     //std::cout << im.rows << std::endl;
+    int nrows = im.rows*im.channels(); 
+    int ncols = im.cols;
+    std::cout << im.channels() << std::endl;
+    //
+    cv::MatIterator_<cv::Vec3b> it, end;
+    image<rgb> *imptr = &input[0];
+    for(it = im.begin<cv::Vec3b>(), end = im.end<cv::Vec3b>(); it != end; ++it) {
+        rgb pixel; 
+        pixel.r = (*it)[0];
+        pixel.g = (*it)[1];
+        pixel.b = (*it)[2];
+        *imptr = pixel;
+    } // it
     
-    
+    return input;
 }
 
 int main(int argc, char **argv) {
@@ -55,6 +68,8 @@ int main(int argc, char **argv) {
 
   std::cout << "got " << num_ccs << " components\n";
   std::cout << "done! uff...thats hard work.\n";*/
+
+  delete input;
 
   return 0;
 }

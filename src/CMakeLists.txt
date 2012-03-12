@@ -8,6 +8,6 @@ cmake_minimum_required(VERSION 2.8)
 find_package( OpenCV REQUIRED )
 
 include_directories(.)
-set(CMAKE_CXX_FLAGS "-g -O3")
+set(CMAKE_CXX_FLAGS "-g")
 add_executable(segment fzsegment.cpp)
 target_link_libraries(segment ${OpenCV_LIBS})
