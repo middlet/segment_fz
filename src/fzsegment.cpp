@@ -14,29 +14,39 @@
 // local includes
 #include "image.h"
 #include "misc.h"
-//#include "pnmfile.h" // not needed as using opencv
+#include "pnmfile.h" // not needed as using opencv
 #include "segment-image.h"
 
 image<rgb> *opencv_to_imagefz(const cv::Mat &im) {
     image<rgb> *input = new image<rgb>(im.size().width, im.size().height);
-    std::cout << im.cols << " " << im.rows << std::endl;
-    std::cout << input->width() << " " << input->height() << std::endl;
-    //std::cout << im.rows << std::endl;
-    int nrows = im.rows*im.channels(); 
-    int ncols = im.cols;
-    std::cout << im.channels() << std::endl;
-    //
-    cv::MatIterator_<cv::Vec3b> it, end;
-    image<rgb> *imptr = &input[0];
-    for(it = im.begin<cv::Vec3b>(), end = im.end<cv::Vec3b>(); it != end; ++it) {
-        rgb pixel; 
-        pixel.r = (*it)[0];
-        pixel.g = (*it)[1];
-        pixel.b = (*it)[2];
-        *imptr = pixel;
+    cv::MatConstIterator_<cv::Vec3b> it = im.begin<cv::Vec3b>();
+    cv::MatConstIterator_<cv::Vec3b> it_end = im.end<cv::Vec3b>();
+    rgb *imptr = input->data;
+    for(; it != it_end; it++) {
+        cv::Vec3b pixel = *it;
+        imptr->r = pixel[0];
+        imptr->g = pixel[1];
+        imptr->b = pixel[2];
+        imptr++;
     } // it
-    
+        
     return input;
+}
+
+cv::Mat *imagefz_to_opencv(image<rgb> *im) {
+    int width = im->width();
+    int height = im->height();
+    cv::Mat *imout = new cv::Mat(width, height, CV_8UC3); 
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            cv::Vec3b pixel = imout->at<cv::Vec3b>(x, y);
+            pixel[0] = imRef(im, x, y).r;
+            pixel[1] = imRef(im, x, y).g;
+            pixel[2] = imRef(im, x, y).b;
+            imout->at<cv::Vec3b>(0,0) = pixel;
+        } // x
+    } // y
+    return imout;
 }
 
 int main(int argc, char **argv) {
@@ -56,20 +66,17 @@ int main(int argc, char **argv) {
       std::cout << "failed to load : " << argv[4] << std::endl;
       return -1;
   }
-  //std::cout << im.data << std::endl;
-  std::cout << im.rows << std::endl;
   image<rgb> *input = opencv_to_imagefz(im);
-  /*image<rgb> *input = loadPPM(argv[4]);
-	
   std::cout << "processing\n";
   int num_ccs; 
   image<rgb> *seg = segment_image(input, sigma, k, min_size, &num_ccs); 
-  savePPM(seg, argv[5]);
-
+  cv::Mat *segim = imagefz_to_opencv(seg);
+  cv::imwrite(argv[5], *segim);
   std::cout << "got " << num_ccs << " components\n";
-  std::cout << "done! uff...thats hard work.\n";*/
+  std::cout << "done! uff...thats hard work.\n";
 
   delete input;
+  delete segim;
 
   return 0;
 }
