@@ -11,3 +11,6 @@ include_directories(.)
 set(CMAKE_CXX_FLAGS "-g")
 add_executable(segment fzsegment.cpp)
 target_link_libraries(segment ${OpenCV_LIBS})
+
+add_executable(compare compare.cpp)
+target_link_libraries(compare ${OpenCV_LIBS})

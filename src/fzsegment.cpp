@@ -40,9 +40,9 @@ cv::Mat *imagefz_to_opencv(image<rgb> *im) {
     for (int y=0; y<height; y++) {
         for (int x=0; x<width; x++) {
             cv::Vec3b pixel = imout->at<cv::Vec3b>(y, x);
-            pixel[0] = imRef(im, x, y).r;
+            pixel[0] = imRef(im, x, y).b;
             pixel[1] = imRef(im, x, y).g;
-            pixel[2] = imRef(im, x, y).b;
+            pixel[2] = imRef(im, x, y).r;
             imout->at<cv::Vec3b>(y,x) = pixel;
         } // x
     } // y
