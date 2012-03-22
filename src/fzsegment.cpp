@@ -14,8 +14,8 @@
 // local includes
 #include "image.h"
 #include "misc.h"
-#include "pnmfile.h" // not needed as using opencv
-#include "segment-image.h"
+//#include "pnmfile.h" // not needed as using opencv
+#include "fz-segment-image.h"
 
 image<rgb> *opencv_to_imagefz(const cv::Mat &im) {
     image<rgb> *input = new image<rgb>(im.size().width, im.size().height);
@@ -67,17 +67,18 @@ int main(int argc, char **argv) {
       std::cout << "failed to load : " << argv[4] << std::endl;
       return -1;
   }
-  image<rgb> *input = opencv_to_imagefz(im);
+  //image<rgb> *input = opencv_to_imagefz(im);
   std::cout << "processing\n";
   int num_ccs; 
-  image<rgb> *seg = segment_image(input, sigma, k, min_size, &num_ccs); 
-  cv::Mat *segim = imagefz_to_opencv(seg);
-  cv::imwrite(argv[5], *segim);
+  //image<rgb> *seg = segment_image(input, sigma, k, min_size, &num_ccs); 
+  cv::Mat *seg = segment_image(&im, sigma, k, min_size, &num_ccs);
+  //cv::Mat *segim = imagefz_to_opencv(seg);
+  cv::imwrite(argv[5], *seg);
   std::cout << "got " << num_ccs << " components\n";
   std::cout << "done! uff...thats hard work.\n";
 
-  delete input;
-  delete segim;
+  //delete input;
+  delete seg;
 
   return 0;
 }
