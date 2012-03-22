@@ -9,8 +9,12 @@ find_package( OpenCV REQUIRED )
 
 include_directories(.)
 set(CMAKE_CXX_FLAGS "-g")
-add_executable(segment fzsegment.cpp)
-target_link_libraries(segment ${OpenCV_LIBS})
+# original version
+add_executable(segment segment.cpp)
 
+# opencv version
+add_executable(fzsegment fzsegment.cpp)
+target_link_libraries(fzsegment ${OpenCV_LIBS})
+# comparison function
 add_executable(compare compare.cpp)
 target_link_libraries(compare ${OpenCV_LIBS})

@@ -1,1 +1,7 @@
 orig_input.png was generated with params : 0.5 50 100 input.png orig_output.png
+
+./src/segment 0.5 50 100 ../data/input.pnm ./output.pnm
+loading input image.
+processing
+got 109 components
+done! uff...thats hard work.
