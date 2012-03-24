@@ -13,10 +13,11 @@
 #include <opencv2/highgui/highgui.hpp>
 // local includes
 #include "image.h"
-#include "misc.h"
+//#include "misc.h"
 //#include "pnmfile.h" // not needed as using opencv
 #include "fz-segment-image.h"
 
+/*
 image<rgb> *opencv_to_imagefz(const cv::Mat &im) {
     image<rgb> *input = new image<rgb>(im.size().width, im.size().height);
     cv::MatConstIterator_<cv::Vec3b> it = im.begin<cv::Vec3b>();
@@ -49,6 +50,7 @@ cv::Mat *imagefz_to_opencv(image<rgb> *im) {
     
     return imout;
 }
+*/
 
 int main(int argc, char **argv) {
   if (argc != 6) {
