@@ -30,10 +30,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 template <class T>
 inline T square(const T &x) { return x*x; };
 
-// random color
 cv::Vec3b random_rgb(){ 
-  //rgb c;
-  //double r;
   cv::Vec3b c;
   
   c[0] = (uchar)random();
@@ -120,10 +117,6 @@ cv::Mat *segment_image(cv::Mat *im, float sigma, float c, int min_size,
   int height = im->size().height;
 
   // produce a smoothed version of the original image
-  // gaussian smoothing exp(-0.5*square(i/sigma), N = 4*sigma+1
-  //int len = 2*(int)ceil(sigma * 4) + 1;  
-  //cv::Mat *smooth = new cv::Mat(height, width, CV_8UC3, cv::Scalar(0,0,0)); 
-  //cv::GaussianBlur(*im, *smooth, cv::Size(0,0), sigma, 0);
   cv::Mat *smooth = smooth_image(im, sigma);
  
   // build graph
