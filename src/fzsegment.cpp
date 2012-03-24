@@ -12,7 +12,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 // local includes
-#include "image.h"
+//#include "image.h"
 //#include "misc.h"
 //#include "pnmfile.h" // not needed as using opencv
 #include "fz-segment-image.h"

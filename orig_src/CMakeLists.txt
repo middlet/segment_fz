@@ -11,10 +11,3 @@ include_directories(.)
 set(CMAKE_CXX_FLAGS "-g")
 # original version
 add_executable(segment segment.cpp)
-
-# opencv version
-add_executable(fzsegment fzsegment.cpp)
-target_link_libraries(fzsegment ${OpenCV_LIBS})
-# comparison function
-add_executable(compare compare.cpp)
-target_link_libraries(compare ${OpenCV_LIBS})
